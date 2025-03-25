@@ -5,33 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SampleWPF.Views"
         mc:Ignorable="d"
-        Title="Todo App" Height="600" Width="800">
+        Title="Todo App" Height="800" Width="1000">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="159*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBox Text="{Binding TaskName}" Width="200" Height="30" Margin="50,23,545,531"/>
-        <TextBox Text="{Binding Description}" Width="200" Height="30" Margin="50,61,545,493"/>
-        <DatePicker SelectedDate="{Binding Deadline}" Width="200" Height="30" Margin="50,103,545,451"/>
-        <Button Content="Add Task" Command="{Binding AddTaskCommand}" Width="100" Height="30" Margin="298,103,397,451"/>
+            <TextBox Text="{Binding TaskName}" Width="200" Height="50" Margin="50,20,744,714"/>
+            <TextBox Text="{Binding Description}" Width="200" Height="50" Margin="50,80,744,654"/>
+            <DatePicker SelectedDate="{Binding Deadline}" Width="200" Height="50" Margin="50,147,744,587"/>
+            <Button Content="Add Task" Command="{Binding AddTaskCommand}" Width="100" Height="50" Margin="303,147,591,587"/>
 
-        <ListBox ItemsSource="{Binding TaskItems}" Margin="50,160,50,25">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}" Width="150"/>
-                        <TextBlock Text="{Binding Task}" Width="150"/>
-                        <TextBlock Text="{Binding Description}" Width="150"/>
-                        <TextBlock Text="{Binding DeadLine}" Width="100"/>
-                        <Button Content="Delete" Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                CommandParameter="{Binding}" Width="75" Margin="5,0"/>
-                        <!--<Button Content="Update Status" Command="{Binding DataContext.UpdateStatusCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                CommandParameter="{Binding}" Width="100" Margin="5,0"/>-->
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
+            <ListView ItemsSource="{Binding TaskItems}" Margin="50,245,36,45">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="TaskName" DisplayMemberBinding="{Binding TaskName}" Width="150"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="80"/>
+                    <GridViewColumn Header="Deadline" DisplayMemberBinding="{Binding Deadline}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace SampleWPF.Services
 {
     public interface ITaskService
     {
-        List<TaskItem> GetTasks();
+        ObservableCollection<TaskItem> GetTasks();
         void AddTask(TaskItem item);
         void RemoveTask(TaskItem item);
+        void UpdateTask(TaskItem item);
     }
 }

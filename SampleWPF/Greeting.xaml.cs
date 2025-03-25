@@ -13,9 +13,9 @@ namespace SampleWPF
 {
     /// <summary>
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Greeting : Window
     {
-        public MainWindow()
+        public Greeting()
         {
             InitializeComponent();
         }

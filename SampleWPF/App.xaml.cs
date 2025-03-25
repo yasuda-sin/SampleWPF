@@ -12,29 +12,28 @@ namespace SampleWPF
     /// </summary>
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        private readonly ServiceProvider _serviceProvider;
+
+        public App()
+        {
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            _serviceProvider = services.BuildServiceProvider();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<ITaskService, TaskService>();
+            services.AddSingleton<TaskViewModel>();
+            services.AddSingleton<Views.MainWindow>();        // MainWindow を DI に登録
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            //DIコンテナの設定
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
-            ServiceProvider = serviceCollection.BuildServiceProvider();
-
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = _serviceProvider.GetRequiredService<Views.MainWindow>();
             mainWindow.Show();
-        }
-        private void ConfigureServices(IServiceCollection services)
-        {
-            //service の登録
-            services.AddSingleton<ITaskService, TaskService>();
-            //viewmodel の登録
-            services.AddSingleton<TaskViewModel>();
-            //mainwindow の登録
-            services.AddSingleton<MainWindow>();            
         }
     }
 }

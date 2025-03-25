@@ -21,6 +21,6 @@ namespace SampleWPF.Models
         public int Status { get; set; } = (int)TaskStatus.NotStarted;
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public DateTime UpdatedDateTime { get; set; }
-        public DateTime DeadLine { get; set; }
+        public DateTime Deadline { get; set; }
     }
 }

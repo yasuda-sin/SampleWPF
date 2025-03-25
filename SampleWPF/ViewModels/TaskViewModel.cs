@@ -10,14 +10,14 @@ using System.Windows.Input;
 
 namespace SampleWPF.ViewModels
 {
-    public class TaskViewModel
+    public class TaskViewModel : ViewModelBase
     {
         private readonly ITaskService _taskService;
         public ObservableCollection<TaskItem> TaskItems { get; set; }
 
-        public string TaskName { get; set; }
-        public string Description { get; set; }
-        public DateTime DeadLine { get; set; } = DateTime.Now;
+        public required string TaskName { get; set; }
+        public required string Description { get; set; }
+        public DateTime Deadline { get; set; } = DateTime.Now;
 
         public ICommand AddTaskCommand { get; set; }
         public ICommand RemoveTaskCommand { get; set; }
@@ -38,14 +38,14 @@ namespace SampleWPF.ViewModels
                 {
                     TaskName = TaskName,
                     Description = Description,
-                    DeadLine = DeadLine
+                    Deadline = Deadline
                 };
                 _taskService.AddTask(newTask);
                 TaskItems.Add(newTask);     //viewに反映
 
                 TaskName =string.Empty;
                 Description = string.Empty;
-                DeadLine = DateTime.Now;
+                Deadline = DateTime.Now;
             }
         }
 
