@@ -1,0 +1,46 @@
+﻿<Window x:Class="WpfApp1.Views.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="clr-namespace:WpfApp1.Views.Behaviors" 
+        xmlns:vm="clr-namespace:WpfApp1.Views" 
+        mc:Ignorable="d"
+        Title="MenuWindow" Height="300" Width="300"
+        b:WindowClosingBehavior.Callback="{Binding ClosingCallback}"
+        >
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ExitCommand}"></KeyBinding>
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="ファイル(_F)">
+                <MenuItem Header="開く(_O)" Command="{Binding OpenFileCommand}" 
+                                                            InputGestureText="Ctrl + O"
+                                                            b:CommonDialogBehavior.MyCallback="{Binding DialogCallback}"
+                                                            b:CommonDialogBehavior.Title="ファイルを開く" 
+                                                            b:CommonDialogBehavior.Filter= "画像ファイル (*.bmp; *.jpg;*.png)|*.bmp;*.jpg;*.png|すべてのファイル (*.*)|*.*"
+                                                            b:CommonDialogBehavior.Multiselect="False"  />
+                <Separator></Separator>
+                <MenuItem Header="終了(_X)" Command="{Binding ExitCommand}" InputGestureText="Ctrl + X"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="ヘルプ(_H)">
+                <MenuItem Header="バージョン情報(_V)"
+                          Command="{Binding VersionDialogCommand}"
+                          b:OpenDialogBehavior.WindowType="{x:Type vm:VersionView}"
+                          b:OpenDialogBehavior.DataContext="{Binding VersionViewModel}"
+                          b:OpenDialogBehavior.Callback="{Binding VersionDialogCallback}">
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem DockPanel.Dock="Right">
+                <TextBlock Text="{Binding CurrentTime, StringFormat='yyyy/MM/dd HH:mm'}"></TextBlock>
+            </StatusBarItem>
+            <Separator DockPanel.Dock="Right"></Separator>
+            <TextBlock></TextBlock>
+        </StatusBar>
+        <Grid Background="DarkSeaGreen"></Grid>
+    </DockPanel>
+</Window>
