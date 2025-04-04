@@ -18,7 +18,7 @@ namespace WpfApp1.Models
         public int TaskId { get; set; }
         public required string TaskName { get; set; }
         public required string Description { get; set; }
-        public int Status { get; set; } = (int)TaskStatus.NotStarted;
+        public byte Status { get; set; } = (byte)TaskStatus.NotStarted;
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public DateTime UpdatedDateTime { get; set; }
         public DateTime Deadline { get; set; }
