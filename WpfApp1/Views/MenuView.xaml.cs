@@ -1,5 +1,4 @@
-﻿using SampleWPF.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SampleWPF.Views
+namespace WpfApp1.Views
 {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// MenuWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MenuWindow : Window
     {
-        private readonly TaskViewModel _vm;
-
-        public MainWindow(TaskViewModel vm)
+        public MenuWindow()
         {
             InitializeComponent();
-            _vm = vm;
-            DataContext = _vm;
         }
     }
 }
