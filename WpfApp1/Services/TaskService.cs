@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using WpfApp1.Models;
+using WpfApp1.Helpers;
 
 namespace WpfApp1.Services
 {
     internal class TaskService : ITaskService
     {
-        private readonly string _connectionString = "";
+        private readonly string _connectionString = DBHelper.ConnectionString;
         public async Task<List<TaskItem>> GetAllTaskItemsAsync()
         {
             var taskItem = new List<TaskItem>();
@@ -67,7 +68,7 @@ namespace WpfApp1.Services
                                     TaskId = (int)reader["TaskId"],
                                     TaskName = (string)reader["TaskName"],
                                     Description = (string)reader["Description"],
-                                    Status = (int)reader["Status"],
+                                    Status = (byte)reader["Status"],
                                     CreatedDateTime = (DateTime)reader["CreatedDateTime"],
                                     UpdatedDateTime = reader["UpdatedDateTime"] == DBNull.Value ? DateTime.MinValue : (DateTime)reader["UpdatedDateTime"],
                                     Deadline = (DateTime)reader["Deadline"]
