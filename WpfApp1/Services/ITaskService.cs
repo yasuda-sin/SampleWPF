@@ -12,7 +12,7 @@ namespace WpfApp1.Services
     {
         Task<List<TaskItem>> GetAllTaskItemsAsync();
         Task<TaskItem?> GetTaskItemByIdAsync(int taskId);
-        Task<bool> AddTaskItemAsync(TaskItem taskItem);
+        Task<(bool, int)> AddTaskItemAsync(TaskItem taskItem);
         Task<bool> UpdateTaskItemAsync(TaskItem taskItem);
         Task<bool> DeleteTaskItemAsync(int taskId);
     }

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.ViewModels;
 
 namespace WpfApp1.Views
 {
@@ -19,9 +20,10 @@ namespace WpfApp1.Views
     /// </summary>
     public partial class MenuWindow : Window
     {
-        public MenuWindow()
+        public MenuWindow(MenuViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

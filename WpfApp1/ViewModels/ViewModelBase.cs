@@ -12,9 +12,11 @@ namespace WpfApp1.ViewModels
     /// ViewModelの基底クラス
     /// </summary>
     //INotifyPropertyChangedでViewModelからViewへプロパティが変更されたことを通知する
-    internal abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        //OnPropertyChangedの方がメジャーっぽいので置換
         //protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         //{
         //    var h = PropertyChanged;

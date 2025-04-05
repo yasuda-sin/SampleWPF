@@ -8,7 +8,7 @@ using WpfApp1.Views.Behaviors;
 
 namespace WpfApp1.ViewModels
 {
-    class MenuViewModel : ViewModelBase
+    public class MenuViewModel : ViewModelBase
     {
         #region ファイルを開く
         private DelegateCommand _openFileCommand;
@@ -127,6 +127,38 @@ namespace WpfApp1.ViewModels
                 return _currentTime;
             }
             private set { SetProperty(ref _currentTime, value); }
+        }
+        #endregion
+
+
+        #region タスク管理画面
+        private TaskViewModel _taskViewModel = new TaskViewModel();
+        public TaskViewModel TaskViewModel
+        {
+            get { return _taskViewModel; }
+        }
+        private DelegateCommand _taskDialogCommand;
+        public DelegateCommand TaskDialogCommand
+        {
+            get
+            {
+                return _taskDialogCommand ?? (_taskDialogCommand = new DelegateCommand(
+                    _ =>
+                    {
+                        TaskDialogCallback = OnTaskDialog;
+                    }));
+            }
+        }
+        private Action<bool> _taskDialogCallback;
+        public Action<bool> TaskDialogCallback
+        {
+            get { return _taskDialogCallback; }
+            private set { SetProperty(ref _taskDialogCallback, value); }
+        }
+        private void OnTaskDialog(bool result)
+        {
+            TaskDialogCallback = null;
+            System.Diagnostics.Debug.WriteLine(result);
         }
         #endregion
     }
