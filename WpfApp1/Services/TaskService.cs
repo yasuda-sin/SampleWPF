@@ -63,7 +63,7 @@ namespace WpfApp1.Services
                         {
                             while (await reader.ReadAsync())
                             {
-                                taskitem =  new TaskItem
+                                taskitem = new TaskItem
                                 {
                                     TaskId = (int)reader["TaskId"],
                                     TaskName = (string)reader["TaskName"],
@@ -82,7 +82,7 @@ namespace WpfApp1.Services
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
                 return null;
@@ -90,30 +90,32 @@ namespace WpfApp1.Services
             return null;
         }
 
-        public async Task<bool> AddTaskItemAsync(TaskItem taskItem)
+        public async Task<(bool, int)> AddTaskItemAsync(TaskItem taskItem)
         {
+            var id = 0;
             try
             {
                 using (var con = new SqlConnection(_connectionString))
                 {
                     await con.OpenAsync();
                     var cmd = new SqlCommand(@"
-                        INSERT INTO Tasks (TaskName, Description, Status, CreatedDateTime, Deadline) 
-                        VALUES (@TaskName, @Description, @Status, @CreatedDateTime, @Deadline)", con);
+                        INSERT INTO Tasks (TASK_NAME, DESCRIPTION, STATUS, CREATED_DATETIME, DEADLINE) 
+                        VALUES (@TaskName, @Description, @Status, @CreatedDateTime, @Deadline);
+                        SELECT CAST(SCOPE_IDENTITY() AS INT) AS NEW_ID;", con);
                     cmd.Parameters.AddWithValue("@TaskName", taskItem.TaskName);
                     cmd.Parameters.AddWithValue("@Description", taskItem.Description);
                     cmd.Parameters.AddWithValue("@Status", taskItem.Status);
                     cmd.Parameters.AddWithValue("@CreatedDateTime", taskItem.CreatedDateTime);
                     cmd.Parameters.AddWithValue("@Deadline", taskItem.Deadline);
-                    await cmd.ExecuteNonQueryAsync();
+                    id = (int)await cmd.ExecuteScalarAsync();
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
-                return false;
+                return (false, id);
             }
-            return true;
+            return (true, id);
         }
 
         public async Task<bool> UpdateTaskItemAsync(TaskItem taskItem)
@@ -125,8 +127,8 @@ namespace WpfApp1.Services
                     await con.OpenAsync();
                     var cmd = new SqlCommand(@"
                         UPDATE Tasks 
-                        SET TaskName = @TaskName, Description = @Description, Status = @Status, UpdatedDateTime = @UpdatedDateTime, Deadline = @Deadline 
-                        WHERE TaskId = @TaskId", con);
+                        SET TASK_NAME = @TaskName, DESCRIPTION = @Description, STATUS = @Status, UPDATED_DATETIME = @UpdatedDateTime, DEADLINE = @Deadline 
+                        WHERE TASK_ID = @TaskId", con);
                     cmd.Parameters.AddWithValue("@TaskId", taskItem.TaskId);
                     cmd.Parameters.AddWithValue("@TaskName", taskItem.TaskName);
                     cmd.Parameters.AddWithValue("@Description", taskItem.Description);
@@ -151,7 +153,7 @@ namespace WpfApp1.Services
                 using (var con = new SqlConnection(_connectionString))
                 {
                     await con.OpenAsync();
-                    var cmd = new SqlCommand("DELETE FROM Tasks WHERE TaskId = @TaskId", con);
+                    var cmd = new SqlCommand("DELETE FROM Tasks WHERE TASK_ID = @TaskId", con);
                     cmd.Parameters.AddWithValue("@TaskId", taskId);
                     await cmd.ExecuteNonQueryAsync();
                 }

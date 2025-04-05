@@ -4,14 +4,90 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Views"
+        xmlns:h="clr-namespace:WpfApp1.Helpers" 
         mc:Ignorable="d"
-        Title="TaskView" Height="300" Width="700">
-    <DockPanel>
+        Title="TaskView" Width="850"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <h:DateTimeToStringConverter x:Key="DateTimeToStringConverter" Format="yyyy/MM/dd HH:mm"/>
+    </Window.Resources>
+
+
+    <DockPanel Margin="5">
+        <TextBlock DockPanel.Dock="Top" Text="タスク名：" TextAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBox DockPanel.Dock="Top" Margin="5"  Text="{Binding TaskName}"></TextBox>
+        <TextBlock DockPanel.Dock="Top" Text="内容：" TextAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBox DockPanel.Dock="Top" Margin="5"  Text="{Binding Description}"></TextBox>
+        <TextBlock DockPanel.Dock="Top" Text="いつまで：" TextAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <DatePicker DockPanel.Dock="Top"  SelectedDate="{Binding Deadline}" Margin="5"/>
+        <Separator DockPanel.Dock="Top"></Separator>
         <Button DockPanel.Dock="Top" Content="追加" Command="{Binding AddCommand}" Margin="5"></Button>
+        <Separator DockPanel.Dock="Top"></Separator>
         <ListBox ItemsSource="{Binding TaskItems}">
+            <ListBox.Template>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="True">
+                        <Grid DockPanel.Dock="Top" Height="30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" HorizontalContentAlignment="Center">タスクID</Label>
+                            <Label Grid.Column="1" HorizontalContentAlignment="Center">タスク名</Label>
+                            <Label Grid.Column="2" HorizontalContentAlignment="Center">内容</Label>
+                            <Label Grid.Column="3" HorizontalContentAlignment="Center">ステータス</Label>
+                            <Label Grid.Column="4" HorizontalContentAlignment="Center">作成日</Label>
+                            <Label Grid.Column="5" HorizontalContentAlignment="Center">更新日</Label>
+                            <Label Grid.Column="6" HorizontalContentAlignment="Center">締め切り</Label>
+                            <Label Grid.Column="7" HorizontalContentAlignment="Center">更新</Label>
+                            <Label Grid.Column="8" HorizontalContentAlignment="Center">削除</Label>
+                        </Grid>
+                        <ItemsPresenter></ItemsPresenter>
+                    </DockPanel>
+                </ControlTemplate>
+            </ListBox.Template>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="5" Text="{Binding TaskId}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="1" Margin="5" Text="{Binding TaskName}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="2" Margin="5" Text="{Binding Description}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="3" Margin="5" Text="{Binding Status}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="4" Margin="5" Text="{Binding CreatedDateTime, StringFormat='yyyy/MM/dd HH:mm'}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="5" Margin="5" Text="{Binding UpdatedDateTime, Converter={StaticResource DateTimeToStringConverter}}" TextAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="6" Margin="5" Text="{Binding Deadline, StringFormat='yyyy/MM/dd'}" TextAlignment="Center"></TextBlock>
+                        <Button Grid.Column="7" Content="更新" Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding .}" Margin="2" Padding="7,0,7,0" HorizontalAlignment="Center"></Button>
+                        <Button Grid.Column="8" Content="削除" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding .}" Margin="2" Padding="7,0,7,0" HorizontalAlignment="Center" Foreground="#FFFFE9E9">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#FFFBA8A8" Offset="1"/>
+                                    <GradientStop Color="#FFFF2F2F" Offset="0.009"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                        </Button>
+                    </Grid>
+                    <!--<StackPanel Orientation="Horizontal">
                         <Button Content="X" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding .}" Margin="5"></Button>
                         <StackPanel>
                             <TextBlock Text="{Binding TaskId}"></TextBlock>
@@ -22,7 +98,7 @@
                             <TextBlock Text="{Binding UpdatedDateTime, StringFormat='yyyy/MM/dd HH:mm'}"></TextBlock>
                             <TextBlock Text="{Binding Deadline, StringFormat='yyyy/MM/dd'}"></TextBlock>
                         </StackPanel>
-                    </StackPanel>
+                    </StackPanel>-->
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
