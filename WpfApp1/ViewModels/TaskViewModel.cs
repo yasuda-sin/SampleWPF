@@ -11,7 +11,7 @@ using WpfApp1.Services;
 
 namespace WpfApp1.ViewModels
 {
-    internal class TaskViewModel : ViewModelBase
+    public class TaskViewModel : ViewModelBase
     {
         private string _taskName;
         public string TaskName 

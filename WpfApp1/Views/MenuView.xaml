@@ -9,7 +9,6 @@
         Title="MenuWindow" Height="300" Width="300"
         b:WindowClosingBehavior.Callback="{Binding ClosingCallback}"
         WindowStartupLocation="CenterScreen">
-    
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ExitCommand}"></KeyBinding>

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace WpfApp1.Helpers
 {
-    internal class DelegateCommand : ICommand
+    public class DelegateCommand : ICommand
     {
         private Action<object> _execute;
         //入力にparameter, 戻り値にboolのメソッドのデリゲート

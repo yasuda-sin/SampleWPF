@@ -8,7 +8,7 @@ using WpfApp1.Models;
 
 namespace WpfApp1.ViewModels
 {
-    internal class VersionViewModel : ViewModelBase
+    public class VersionViewModel : ViewModelBase
     {
         public string ProductName
         {

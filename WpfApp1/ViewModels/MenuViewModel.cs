@@ -8,7 +8,7 @@ using WpfApp1.Views.Behaviors;
 
 namespace WpfApp1.ViewModels
 {
-    class MenuViewModel : ViewModelBase
+    public class MenuViewModel : ViewModelBase
     {
         #region ファイルを開く
         private DelegateCommand _openFileCommand;
