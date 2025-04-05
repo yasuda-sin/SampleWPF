@@ -16,34 +16,34 @@ namespace WpfApp1.ViewModels
         private string _taskName;
         public string TaskName 
         {
-            get { return _taskName; }
-            set { SetProperty(ref _taskName, value); }
+            get => _taskName;
+            set  => SetProperty(ref _taskName, value);
         }
+
         private string _description;
         public string Description
         {
-            get { return _description; }
-            set
-            {
-                SetProperty(ref _description, value);
-            }
+            get => _description;
+            set => SetProperty(ref _description, value);
         }
-        public byte Status { get; set; } = (byte)Models.TaskStatus.NotStarted;
-        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+
+        public byte Status { get; private set; } = (byte)Models.TaskStatus.NotStarted;
+
+        public DateTime CreatedDateTime { get; private set; } = DateTime.Now;
 
         private DateTime _deadline = DateTime.Now;
         public DateTime Deadline 
         {
-            get { return _deadline; }
-            set { SetProperty(ref _deadline, value); }
+            get => _deadline;
+            set => SetProperty(ref _deadline, value);
         }
 
         private readonly TaskService _taskService;
         private ObservableCollection<TaskItem> _taskItems = new ObservableCollection<TaskItem>();
         public ObservableCollection<TaskItem> TaskItems
         {
-            get { return _taskItems; }
-            private set { SetProperty(ref _taskItems, value); }
+            get  => _taskItems;
+            set => SetProperty(ref _taskItems, value);
         }
 
         public DelegateCommand LoadTasksCommand { get; }
@@ -106,10 +106,10 @@ namespace WpfApp1.ViewModels
                 return _deleteCommand ?? (_deleteCommand = new DelegateCommand(
                     async (t) =>
                     {
-                        var id = (t as TaskItem).TaskId;
-                        if (await _taskService.DeleteTaskItemAsync(id))
+                        var taskItem = t as TaskItem;
+                        if (await _taskService.DeleteTaskItemAsync(taskItem!.TaskId))
                         {
-                            _taskItems.Remove(t as TaskItem);
+                            _taskItems.Remove(taskItem);
                         }
                         DeleteCommand.RaiseCanExecuteChanged();
                     }));
@@ -132,7 +132,7 @@ namespace WpfApp1.ViewModels
                         var oldTaskItem = t as TaskItem;
                         var newTaskItem = new TaskItem
                         {
-                            TaskId = oldTaskItem.TaskId,
+                            TaskId = oldTaskItem!.TaskId,
                             TaskName = TaskName,
                             Description = Description,
                             CreatedDateTime = oldTaskItem.CreatedDateTime,
