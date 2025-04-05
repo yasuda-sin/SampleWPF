@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:b="clr-namespace:WpfApp1.Views.Behaviors" 
-        xmlns:vm="clr-namespace:WpfApp1.Views" 
+        xmlns:v="clr-namespace:WpfApp1.Views" 
         mc:Ignorable="d"
         Title="MenuWindow" Height="300" Width="300"
         b:WindowClosingBehavior.Callback="{Binding ClosingCallback}"
-        >
+        WindowStartupLocation="CenterScreen">
+    
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}"></KeyBinding>
         <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ExitCommand}"></KeyBinding>
@@ -16,19 +17,28 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="ファイル(_F)">
-                <MenuItem Header="開く(_O)" Command="{Binding OpenFileCommand}" 
-                                                            InputGestureText="Ctrl + O"
-                                                            b:CommonDialogBehavior.MyCallback="{Binding DialogCallback}"
-                                                            b:CommonDialogBehavior.Title="ファイルを開く" 
-                                                            b:CommonDialogBehavior.Filter= "画像ファイル (*.bmp; *.jpg;*.png)|*.bmp;*.jpg;*.png|すべてのファイル (*.*)|*.*"
-                                                            b:CommonDialogBehavior.Multiselect="False"  />
+                <MenuItem Header="開く(_O)" 
+                          Command="{Binding OpenFileCommand}" 
+                          InputGestureText="Ctrl + O"
+                          b:CommonDialogBehavior.MyCallback="{Binding DialogCallback}"
+                          b:CommonDialogBehavior.Title="ファイルを開く" 
+                          b:CommonDialogBehavior.Filter= "画像ファイル (*.bmp; *.jpg;*.png)|*.bmp;*.jpg;*.png|すべてのファイル (*.*)|*.*"
+                          b:CommonDialogBehavior.Multiselect="False"  />
                 <Separator></Separator>
                 <MenuItem Header="終了(_X)" Command="{Binding ExitCommand}" InputGestureText="Ctrl + X"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="タスク管理(_T)">
+                <MenuItem Header="タスク管理画面(_U)"
+                          Command="{Binding TaskDialogCommand}"
+                          b:OpenDialogBehavior.WindowType="{x:Type v:TaskView}"
+                          b:OpenDialogBehavior.DataContext="{Binding TaskViewModel}"
+                          b:OpenDialogBehavior.Callback="{Binding TaskDialogCallback}">
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="ヘルプ(_H)">
                 <MenuItem Header="バージョン情報(_V)"
                           Command="{Binding VersionDialogCommand}"
-                          b:OpenDialogBehavior.WindowType="{x:Type vm:VersionView}"
+                          b:OpenDialogBehavior.WindowType="{x:Type v:VersionView}"
                           b:OpenDialogBehavior.DataContext="{Binding VersionViewModel}"
                           b:OpenDialogBehavior.Callback="{Binding VersionDialogCallback}">
                 </MenuItem>

@@ -15,10 +15,10 @@ namespace WpfApp1
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //var w = new MenuWindow();
-            //var vm = new MenuViewModel();   //viewmodelを紐づけ
-            var w = new TaskView();
-            var vm = new TaskViewModel();
+            var w = new MenuWindow();
+            var vm = new MenuViewModel();   //viewmodelを紐づけ
+            //var w = new TaskView();
+            //var vm = new TaskViewModel();
             w.DataContext = vm;
             w.Show();
         }
