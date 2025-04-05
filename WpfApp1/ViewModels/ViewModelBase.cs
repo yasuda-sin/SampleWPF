@@ -15,6 +15,8 @@ namespace WpfApp1.ViewModels
     internal abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        //OnPropertyChangedの方がメジャーっぽいので置換
         //protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         //{
         //    var h = PropertyChanged;
